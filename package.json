@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/wendellunny/robo-criador-de-videos-youtube/issues"
   },
-  "homepage": "https://github.com/wendellunny/robo-criador-de-videos-youtube#readme"
+  "homepage": "https://github.com/wendellunny/robo-criador-de-videos-youtube#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
