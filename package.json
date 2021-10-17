@@ -1,0 +1,22 @@
+{
+  "name": "robo-criador-de-videos-youtube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wendellunny/robo-criador-de-videos-youtube.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wendellunny/robo-criador-de-videos-youtube/issues"
+  },
+  "homepage": "https://github.com/wendellunny/robo-criador-de-videos-youtube#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
