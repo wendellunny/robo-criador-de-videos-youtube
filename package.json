@@ -11,12 +11,14 @@
     "url": "git+https://github.com/wendellunny/robo-criador-de-videos-youtube.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/wendellunny/robo-criador-de-videos-youtube/issues"
   },
   "homepage": "https://github.com/wendellunny/robo-criador-de-videos-youtube#readme",
   "dependencies": {
+    "algorithmia": "^0.3.10",
+    "axios": "^0.23.0",
     "readline-sync": "^1.4.10"
   }
 }
