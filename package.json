@@ -20,6 +20,7 @@
     "algorithmia": "^0.3.10",
     "axios": "^0.23.0",
     "readline-sync": "^1.4.10",
-    "sbd": "^1.0.19"
+    "sbd": "^1.0.19",
+    "watson-developer-cloud": "^4.0.1"
   }
 }
