@@ -3,18 +3,18 @@ const sentenceBoundaryDetection = require('sbd');
 const watson = require('../credentials/watson.json');
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
-var nlu = new NaturalLanguageUnderstandingV1({
+const nlu = new NaturalLanguageUnderstandingV1({
     iam_apikey: watson.apikey,
     version: '2018-04-05',
     url: watson.url
     
   });
-
+const state = require('./state.js');
   
 
+async function robot(){
+    const content = state.load();
 
-
-async function robot(content){
     await fetchContentFromWikipedia(content);
     
     sanitizeContent(content);
@@ -22,6 +22,7 @@ async function robot(content){
     limitMaximumSentences(content);
     await fetchKeyWordsOfAllSentences(content);
 
+    state.save(content);
     async function fetchContentFromWikipedia(content){
         const apiUrl =`https://pt.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&prop=extracts&explaintext&redirects=1&titles=${content.searchTerm}`
         const wikipediaResponse = await axios.get(apiUrl);
@@ -58,7 +59,6 @@ async function robot(content){
     function breakContentIntoSentences(content){
         content.sentences = [];
         const sentences = sentenceBoundaryDetection.sentences(content.sourceContentSanitized);
-        console.log(sentences);
 
         sentences.forEach((sentence) => {
             content.sentences.push({
