@@ -16,7 +16,9 @@ async function robot(){
 
     // await convertAllImages(content);
 
-    await createAllSentenceImages(content);
+    // await createAllSentenceImages(content);
+
+    await createYoutubeThumbanail(content)
     state.save(content);
 
 
@@ -185,7 +187,17 @@ async function robot(){
         })
     }
     
-    
+    async function createYoutubeThumbanail(){
+        return new Promise((resolve,reject)=>{
+            gm()
+                .in('./content/0-converted.png')
+                .write('./content/youtube-thumbnail.jpg',(error) =>{
+                    if (error){
+                        return reject(error);
+                    }
+                })
+        });
+    }
 }
 
 module.exports = robot;
