@@ -195,6 +195,8 @@ async function robot(){
                     if (error){
                         return reject(error);
                     }
+                    console.log('> creating Youtube thumbnail ')
+                    resolve();
                 })
         });
     }
