@@ -19,6 +19,7 @@
   "dependencies": {
     "algorithmia": "^0.3.10",
     "axios": "^0.23.0",
+    "gm": "^1.23.1",
     "googleapis": "^89.0.0",
     "image-downloader": "^4.0.3",
     "readline-sync": "^1.4.10",
