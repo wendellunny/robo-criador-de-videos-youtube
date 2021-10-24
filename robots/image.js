@@ -4,24 +4,29 @@ const google = require('googleapis').google;
 const gm = require('gm').subClass({imageMagick: true});
 const customSearch = google.customsearch('v1');
 
+const googletext = google.texttospeech('v1');
+
+
 
 
 const googleApiCredentials = require('../credentials/google-search.json');
 async function robot(){
     const content = state.load();
 
-    // await fetchImagesOfAllSentences(content);
+    await fetchImagesOfAllSentences(content);
 
-    // await downloadAllImages(content);
+    await downloadAllImages(content);
 
-    // await convertAllImages(content);
+    await convertAllImages(content);
 
-    // await createAllSentenceImages(content);
+    await createAllSentenceImages(content);
 
     await createYoutubeThumbanail(content)
     state.save(content);
 
-
+  async function teste(){
+    await googletext.context()
+  }
     async function fetchImagesOfAllSentences(content){
         for(const sentence of content.sentences){
             const query = `${content.searchTerm} ${sentence.keywords[0]}`;
