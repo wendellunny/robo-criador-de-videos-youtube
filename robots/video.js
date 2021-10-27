@@ -1,14 +1,18 @@
 const gm = require('gm').subClass({imageMagick: true});
-
+const Shell = require('shelljs')
+const path =  require('path');
+const rootPath = path.resolve(__dirname,'..')
 const state = require("./state.js")
 
 async function robot(){
     const content = state.load();
-    await convertAllImages(content);
+    // await convertAllImages(content);
 
-    await createAllSentenceImages(content);
+    // await createAllSentenceImages(content);
 
-    await createYoutubeThumbanail(content);
+    // await createYoutubeThumbanail(content);
+
+    await renderWithKdenLive();
 
     async function convertAllImages(content){
         for (let sentenceIndex = 0 ; sentenceIndex < content.sentences.length;sentenceIndex++){
@@ -126,6 +130,16 @@ async function robot(){
                     resolve();
                 })
         });
+    }
+
+    async function renderWithKdenLive(){
+      return new Promise((resolve,reject)=>{
+        const renderVideo = Shell.exec('/home/lunny/Documents/scripts/robo-video-maker.sh',{silent:false},(code,stdout,stderr)=>{
+            console.log('Video Renderizado com Sucesso');
+            resolve();
+        });
+        
+      })
     }
 }
 
