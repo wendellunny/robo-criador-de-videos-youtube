@@ -5,13 +5,15 @@ const robots = {
     text: require("./robots/text.js"),
     state: require("./robots/state.js"),
     image: require("./robots/image.js"),
+    video: require("./robots/video.js"),
     audio: require("./robots/audio.js")
 }
 async function start(){
     robots.input();
     await robots.text();
     await robots.image();
-    await robots.audio();
+    await robots.video();
+    // await robots.audio();
 
     //const content = robots.state.load();
 
