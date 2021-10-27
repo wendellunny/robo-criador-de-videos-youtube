@@ -9,9 +9,9 @@ const robots = {
     audio: require("./robots/audio.js")
 }
 async function start(){
-    robots.input();
-    await robots.text();
-    await robots.image();
+    // robots.input();
+    // await robots.text();
+    // await robots.image();
     await robots.video();
     // await robots.audio();
 
