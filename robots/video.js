@@ -6,11 +6,11 @@ const state = require("./state.js")
 
 async function robot(){
     const content = state.load();
-    // await convertAllImages(content);
+    await convertAllImages(content);
 
-    // await createAllSentenceImages(content);
+    await createAllSentenceImages(content);
 
-    // await createYoutubeThumbanail(content);
+    await createYoutubeThumbanail(content);
 
     await renderWithKdenLive();
 
@@ -134,7 +134,8 @@ async function robot(){
 
     async function renderWithKdenLive(){
       return new Promise((resolve,reject)=>{
-        const renderVideo = Shell.exec('/home/lunny/Documents/scripts/robo-video-maker.sh',{silent:false},(code,stdout,stderr)=>{
+        console.log('> Renderizando Vídeo');
+        const renderVideo = Shell.exec('/home/lunny/Documents/scripts/video-maker-robot.sh',{silent:true},(code,stdout,stderr)=>{
             console.log('Video Renderizado com Sucesso');
             resolve();
         });

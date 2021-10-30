@@ -1,5 +1,7 @@
 const express = require('express');
+const fs = require('fs');
 const google = require('googleapis').google;
+const youtube = google.youtube({version:"v3"});
 const OAuth2 = google.auth.OAuth2;
 
 const state = require("./state.js");
@@ -8,8 +10,8 @@ async function robot(){
     const content = state.load();
 
     await authenticateWithOAuth();
-    // await uploadVideo();
-    // await uploadThumbnail();
+    const videoInformation = await uploadVideo(content);
+    await uploadThumbnail(videoInformation);
 
     async function authenticateWithOAuth(){
         const webServer =  await startWebServer();
@@ -97,7 +99,67 @@ async function robot(){
                 })
             });
         }
+
+        
    
+    }
+
+    async function uploadVideo(content){
+        const videoFilePath = './content/output.mp4';
+        const videoFileSize = fs.statSync(videoFilePath).size;
+        const videoTitle = `${content.searchTerm}`;
+        const videoTags = [content.searchTerm, ...content.sentences[0].keywords];
+        const videoDescription = content.sentences.map((sentence)=>{
+            return sentence.text
+        }).join('\n\n');
+
+        const requestParameters = {
+            part: 'snippet, status',
+            requestBody: {
+                snippet: {
+                    title: videoTitle,
+                    description: videoDescription,
+                    tags: videoTags,
+                },
+                status: {
+                    privacyStatus: 'unlisted'
+                }
+            },
+            media:{
+                body: fs.createReadStream(videoFilePath)
+            }
+        }
+
+        const youtubeResponse = await youtube.videos.insert(requestParameters,{
+            onUploadProgress: onUploadProgress
+        });
+        
+        console.log(`> Vídeo available at: https://youtu.be/${youtubeResponse.data.id}`);
+        return youtubeResponse.data;
+
+        function onUploadProgress(event){
+            const progress = Math.round((event.bytesRead / videoFileSize)*100);
+            console.log(`> ${progress}% completed`)
+        }
+    }
+
+    async function uploadThumbnail(videoInformation){
+        const videoId = videoInformation.id;
+        const videoThumbnailPath = './content/youtube-thumbnail.jpg';
+
+        const requestParameters = {
+            videoId: videoId,
+            media:{
+                mimiType: 'image/jpeg',
+                body: fs.createReadStream(videoThumbnailPath)
+            }
+        }
+
+        const youtubeResponse = await youtube.thumbnails.set(requestParameters);
+        
+        console.log('> Thumbnail uploaded')
+
+
     }
 
 
