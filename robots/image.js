@@ -13,6 +13,7 @@ async function robot(){
     state.save(content);
 
     async function fetchImagesOfAllSentences(content){
+        console.log("> [Robô de Imagem] Pesquisando imagens no Google Imagens");
         for(const sentence of content.sentences){
             const query = `${content.searchTerm} ${sentence.keywords[0]}`;
             sentence.images = await fetchGoogleAndReturnImagesLinks(query);
@@ -38,6 +39,7 @@ async function robot(){
     }
 
     async function downloadAllImages(content){
+        console.log("> [Robô de Imagem] Baixando Imagens");
         content.downloadedImages = [];
         // console.log(content.sentences[0].images[0]);
         // content.sentences[1].images[0] ='https://static.wikia.nocookie.net/onepiece/images/6/6d/Monkey_D._Luffy_Anime_Post_Timeskip_Infobox.png/revision/latest?cb=20200429191518';

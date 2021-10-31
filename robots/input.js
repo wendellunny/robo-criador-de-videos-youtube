@@ -12,12 +12,12 @@ function robot(){
 
 
     function askAndReturnSearchTerm(){
-        return readLine.question('Type a WIkipedia search term: ');
+        return readLine.question('Digite o tema do vídeo: ');
     }
 
     function askAndReturnPrefix(){
-        const prefixes = ['Who is', 'What is', 'The history of', ];
-        const selectedPrefixIndex = readLine.keyInSelect(prefixes,'Chose one option');
+        const prefixes = ['Quem é', 'O que é', 'A história do', ];
+        const selectedPrefixIndex = readLine.keyInSelect(prefixes,'Escolha uma opção');
         const selectedPrefixText = prefixes[selectedPrefixIndex];
         return selectedPrefixText;
     }

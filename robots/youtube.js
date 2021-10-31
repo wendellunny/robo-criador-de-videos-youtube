@@ -28,7 +28,7 @@ async function robot(){
                 const app = express();
 
                 const server = app.listen(port,()=>{
-                    console.log(`> Listening on http://localhost:${port}`)
+                    console.log(`> [Robô Youtube] Escutando http://localhost:${port}`)
                 })
 
                 resolve({
@@ -53,18 +53,17 @@ async function robot(){
                 access_type : "offline",
                 scope: ['https://www.googleapis.com/auth/youtube']
             });
-            console.log(`>Please give your consent: ${consentUrl} `);
+            console.log(`> [Robô Youtube] Escolha o canal a qual vai ser postado o vídeo e faça o consentimento: ${consentUrl} `);
         }
 
         async function waitForGoogleCallback(webServer){
             return new Promise((resolve,reject)=>{
-                console.log('> Waiting for user consent...')
+                console.log('> [Robô Youtube] Esperando...')
 
                 webServer.app.get('/oauth2callback',(req,res)=>{
                     const authCode = req.query.code;
-                    console.log(`> Consent given ${authCode}`);
 
-                    res.send('<h1>Thank you!</h1><p>Now Close to tab<p/>')
+                    res.send('<h1>Obrigaod</h1><p>Feche esta aba<p/>')
                     resolve(authCode);
                 })
             });
@@ -76,8 +75,6 @@ async function robot(){
                     if(error){
                         return reject(error);
                     }
-                    console.log('> Access Tokens received: ');
-                    console.log(tokens);
 
                     OAuthClient.setCredentials(tokens);
                     resolve();
@@ -105,6 +102,7 @@ async function robot(){
     }
 
     async function uploadVideo(content){
+        console.log('> [Robô Youtube] Upando Vídeo para o youtubee:')
         const videoFilePath = './content/output.mp4';
         const videoFileSize = fs.statSync(videoFilePath).size;
         const videoTitle = `${content.searchTerm}`;
@@ -122,7 +120,7 @@ async function robot(){
                     tags: videoTags,
                 },
                 status: {
-                    privacyStatus: 'unlisted'
+                    privacyStatus: 'public'
                 }
             },
             media:{
@@ -134,12 +132,12 @@ async function robot(){
             onUploadProgress: onUploadProgress
         });
         
-        console.log(`> Vídeo available at: https://youtu.be/${youtubeResponse.data.id}`);
+        console.log(`> [Robô Youtube] Vídeo disponível em: https://youtu.be/${youtubeResponse.data.id}`);
         return youtubeResponse.data;
 
         function onUploadProgress(event){
             const progress = Math.round((event.bytesRead / videoFileSize)*100);
-            console.log(`> ${progress}% completed`)
+            console.log(`> [Robô Youtube] ${progress}% completados`)
         }
     }
 
@@ -157,7 +155,7 @@ async function robot(){
 
         const youtubeResponse = await youtube.thumbnails.set(requestParameters);
         
-        console.log('> Thumbnail uploaded')
+        console.log('> [Robô Youtube] Thumbnail upada')
 
 
     }
