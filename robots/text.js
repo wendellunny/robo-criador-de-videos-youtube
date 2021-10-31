@@ -24,6 +24,7 @@ async function robot(){
 
     state.save(content);
     async function fetchContentFromWikipedia(content){
+        console.log('> [Robô de Texto] Pesquisando sobre o tema na web');
         const apiUrl =`https://pt.wikipedia.org/w/api.php?format=json&formatversion=2&action=query&prop=extracts&explaintext&redirects=1&titles=${content.searchTerm}`
         const wikipediaResponse = await axios.get(apiUrl);
         const wikipediaContent = wikipediaResponse.data;
@@ -31,6 +32,7 @@ async function robot(){
     }
 
     function sanitizeContent(content){
+        console.log('> [Robô de Texto] Limpando conteúdo pesquisado');
         const withoutBlankLinesAndMarkdown = removeBlankLinesAndMarkdown(content.sourceContentOriginal);
         const withoutDatesInParentheses = removeDatesInParetheses(withoutBlankLinesAndMarkdown);
         
@@ -80,6 +82,7 @@ async function robot(){
     }
 
     async function fetchWatsonAndReturnKeyWords(sentence){
+        console.log("> [Robô de Texto] Criando palavras chaves com inteligência artificial");
         return new Promise((resolve,reject)=>{
             nlu.analyze({
                 text: sentence, 

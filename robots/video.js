@@ -15,6 +15,7 @@ async function robot(){
     await renderWithKdenLive();
 
     async function convertAllImages(content){
+      console.log("> [Robô de Vídeo] Editando e convertendo imagens")
         for (let sentenceIndex = 0 ; sentenceIndex < content.sentences.length;sentenceIndex++){
             await convertImage(sentenceIndex);
         }
@@ -52,13 +53,14 @@ async function robot(){
                 return reject(error)
               }
     
-              console.log(`> [video-robot] Image converted: ${outputFile}`)
+              console.log(`> [Robô de Vídeo] Imagem editada e convertida: ${outputFile}`)
               resolve()
             })
         })
     }
 
     async function createAllSentenceImages(content){
+      console.log("> [Robô de Vídeo] Criando imagens das sentenças");
         for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++){
             await createSentenceImage(sentenceIndex, content.sentences[sentenceIndex].text);
 
@@ -112,13 +114,14 @@ async function robot(){
                   return reject(error)
                 }
       
-                console.log(`> [video-robot] Sentence created: ${outputFile}`)
+                console.log(`> [Robô de Vídeo] Sentença criada: ${outputFile}`)
                 resolve()
               })
         })
     }
     
     async function createYoutubeThumbanail(){
+      console.log('> [Robô de Vídeo] Criando a thumbnail do vídeo');
         return new Promise((resolve,reject)=>{
             gm()
                 .in('./content/0-converted.png')
@@ -126,15 +129,16 @@ async function robot(){
                     if (error){
                         return reject(error);
                     }
-                    console.log('> creating Youtube thumbnail ')
+                   
                     resolve();
                 })
         });
     }
 
     async function renderWithKdenLive(){
+      console.log('> [Robô de Vídeo] Renderizando Vídeo');
       return new Promise((resolve,reject)=>{
-        console.log('> Renderizando Vídeo');
+        
         const renderVideo = Shell.exec('/home/lunny/Documents/scripts/video-maker-robot.sh',{silent:true},(code,stdout,stderr)=>{
             console.log('Video Renderizado com Sucesso');
             resolve();
